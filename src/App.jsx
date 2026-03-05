@@ -1,6 +1,8 @@
 import V1Dashboard from "./pages/V1Dashboard";
 import V2Dashboard from "./pages/V2Dashboard";
 import V3Dashboard from "./pages/V3Dashboard";
+import V4Dashboard from "./pages/V4Dashboard";
+import V5Dashboard from "./pages/V5Dashboard";
 
 function normalizePath(pathname) {
   if (!pathname) return "/";
@@ -16,13 +18,19 @@ function VersionSwitcher({ path }) {
           Сравнение
         </a>
         <a className={path === "/v1" ? "version-link active" : "version-link"} href="/v1">
-          V1 (текущая)
+          V1
         </a>
         <a className={path === "/v2" ? "version-link active" : "version-link"} href="/v2">
-          V2 (идеальная)
+          V2
         </a>
         <a className={path === "/v3" ? "version-link active" : "version-link"} href="/v3">
-          V3 (оптимальная)
+          V3
+        </a>
+        <a className={path === "/v4" ? "version-link active" : "version-link"} href="/v4">
+          V4
+        </a>
+        <a className={path === "/v5" ? "version-link active" : "version-link"} href="/v5">
+          V5
         </a>
       </nav>
     </header>
@@ -43,7 +51,7 @@ function ComparePage() {
 
       <section className="compare-grid">
         <article className="panel compare-card animate-in delay-1">
-          <h2>V1 (текущая)</h2>
+          <h2>V1</h2>
           <p>Адрес: `/v1`</p>
           <ul>
             <li>Базовый сводный экран</li>
@@ -56,7 +64,7 @@ function ComparePage() {
         </article>
 
         <article className="panel compare-card animate-in delay-2">
-          <h2>V2 (идеальная)</h2>
+          <h2>V2</h2>
           <p>Адрес: `/v2`</p>
           <ul>
             <li>Ролевые приоритеты: врач/управленец</li>
@@ -70,7 +78,7 @@ function ComparePage() {
         </article>
 
         <article className="panel compare-card animate-in delay-3">
-          <h2>V3 (оптимальная)</h2>
+          <h2>V3</h2>
           <p>Адрес: `/v3`</p>
           <ul>
             <li>Максимально чистая иерархия: сначала риск и задача, потом аналитика</li>
@@ -79,6 +87,32 @@ function ComparePage() {
           </ul>
           <a className="compare-button" href="/v3">
             Открыть V3
+          </a>
+        </article>
+
+        <article className="panel compare-card animate-in delay-4">
+          <h2>V4</h2>
+          <p>Адрес: `/v4`</p>
+          <ul>
+            <li>Построен на реальном отчёте по эффективности АГ</li>
+            <li>Сводные KPI региона, риск-профиль МО и срез по врачам</li>
+            <li>Блок качества измерений и генерация ИИ-сводки по данным</li>
+          </ul>
+          <a className="compare-button" href="/v4">
+            Открыть V4
+          </a>
+        </article>
+
+        <article className="panel compare-card animate-in delay-4">
+          <h2>V5</h2>
+          <p>Адрес: `/v5`</p>
+          <ul>
+            <li>Тот же набор блоков, что в исходном макете личного кабинета</li>
+            <li>Презентационный визуальный стиль с клинической читаемостью</li>
+            <li>ИИ-сводка по пациенту с фокусом на риски и действия</li>
+          </ul>
+          <a className="compare-button" href="/v5">
+            Открыть V5
           </a>
         </article>
       </section>
@@ -93,7 +127,9 @@ function App() {
   if (path === "/v1") content = <V1Dashboard />;
   if (path === "/v2") content = <V2Dashboard />;
   if (path === "/v3") content = <V3Dashboard />;
-  if (path !== "/" && path !== "/v1" && path !== "/v2" && path !== "/v3") content = <ComparePage />;
+  if (path === "/v4") content = <V4Dashboard />;
+  if (path === "/v5") content = <V5Dashboard />;
+  if (path !== "/" && path !== "/v1" && path !== "/v2" && path !== "/v3" && path !== "/v4" && path !== "/v5") content = <ComparePage />;
 
   return (
     <>

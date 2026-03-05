@@ -1108,6 +1108,567 @@ th {
   font-size: 0.84rem;
 }
 
+.v4-page {
+  max-width: 1580px;
+  --v4-space: 16px;
+  --v4-space-sm: 12px;
+  --v4-pad: 20px;
+  --v4-card-pad: 14px;
+}
+
+.v4-page .panel {
+  padding: var(--v4-pad);
+  border-radius: 20px;
+}
+
+.v4-spot {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(28px);
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.v4-spot-a {
+  width: 330px;
+  height: 330px;
+  top: 150px;
+  right: -10px;
+  background: #d8f1e8;
+}
+
+.v4-spot-b {
+  width: 260px;
+  height: 260px;
+  left: 10px;
+  bottom: 120px;
+  background: #d8e8fb;
+}
+
+.v4-hero {
+  margin-top: 8px;
+  background: linear-gradient(112deg, #ffffff 0%, #ffffff 28%, #f3fbf8 70%, #f5f9ff 100%);
+}
+
+.v4-hero-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--v4-space);
+}
+
+.v4-kpi-grid {
+  margin-top: var(--v4-space);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--v4-space-sm);
+}
+
+.v4-kpi {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: var(--v4-card-pad);
+  display: grid;
+  gap: 6px;
+  background: #fbfeff;
+}
+
+.v4-kpi p {
+  color: #566b75;
+  font-size: 0.86rem;
+}
+
+.v4-kpi strong {
+  font-size: 1.38rem;
+}
+
+.v4-kpi span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.v4-neutral {
+  background: #eef6ff;
+  border-color: #cadaef;
+}
+
+.v4-good {
+  background: #eaf8f1;
+  border-color: #c3e5d5;
+}
+
+.v4-warning {
+  background: #fff5df;
+  border-color: #ecd8b0;
+}
+
+.v4-danger {
+  background: #ffeceb;
+  border-color: #f1c8c3;
+}
+
+.v4-layout {
+  margin-top: var(--v4-space);
+  display: grid;
+  grid-template-columns: minmax(0, 2.15fr) minmax(320px, 1fr);
+  gap: var(--v4-space);
+}
+
+.v4-main,
+.v4-side {
+  display: grid;
+  gap: var(--v4-space);
+  align-content: start;
+}
+
+.v4-risk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--v4-space-sm);
+}
+
+.v4-risk-card {
+  border: 1px solid #f0d6cf;
+  border-radius: 12px;
+  padding: var(--v4-card-pad);
+  background: #fff8f7;
+  display: grid;
+  gap: 6px;
+}
+
+.v4-risk-card h3 {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.v4-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--v4-space-sm);
+}
+
+.v4-stat {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: var(--v4-card-pad);
+  background: #fcfeff;
+  display: grid;
+  gap: 4px;
+}
+
+.v4-stat p {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.v4-stat strong {
+  font-size: 1.35rem;
+}
+
+.v4-bars {
+  margin-top: var(--v4-space-sm);
+  display: grid;
+  gap: 10px;
+}
+
+.v4-bars span {
+  display: block;
+  font-size: 0.82rem;
+  color: #405660;
+  margin-bottom: 4px;
+}
+
+.v4-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: #ebf3f6;
+  overflow: hidden;
+}
+
+.v4-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2fa983 0%, #1d8ac8 100%);
+}
+
+.v4-bar.warn i {
+  background: linear-gradient(90deg, #d79d2c 0%, #c68517 100%);
+}
+
+.v4-summary {
+  margin-top: var(--v4-space-sm);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: var(--v4-card-pad);
+  background: #fbfeff;
+  display: grid;
+  gap: 10px;
+}
+
+.v4-summary-title {
+  font-weight: 800;
+}
+
+.v4-summary h3 {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.v4-summary ul {
+  margin: 0;
+  padding-left: 16px;
+  display: grid;
+  gap: 6px;
+}
+
+.v5-page {
+  max-width: 1640px;
+  --v5-space: 16px;
+  --v5-space-sm: 12px;
+  --v5-pad: 20px;
+  --v5-card-pad: 14px;
+}
+
+.v5-page .panel {
+  padding: var(--v5-pad);
+  border-radius: 20px;
+}
+
+.v5-glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(26px);
+  opacity: 0.34;
+  pointer-events: none;
+}
+
+.v5-glow-a {
+  width: 360px;
+  height: 360px;
+  top: 120px;
+  right: -30px;
+  background: #cee9df;
+}
+
+.v5-glow-b {
+  width: 280px;
+  height: 280px;
+  left: 0;
+  bottom: 120px;
+  background: #dce8fb;
+}
+
+.v5-hero {
+  margin-top: 8px;
+  background: linear-gradient(120deg, #ffffff 0%, #fcfffe 35%, #eef8f4 62%, #f2f8ff 100%);
+}
+
+.v5-hero-metrics {
+  margin-top: var(--v5-space);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--v5-space-sm);
+}
+
+.v5-hero-metrics article {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: var(--v5-card-pad);
+  background: #fbfeff;
+  display: grid;
+  gap: 6px;
+}
+
+.v5-hero-metrics p {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.v5-hero-metrics strong {
+  font-size: 1.36rem;
+}
+
+.v5-board {
+  display: grid;
+  margin-top: var(--v5-space);
+  grid-template-columns: minmax(220px, 0.95fr) minmax(0, 2fr) minmax(280px, 1fr);
+  grid-template-areas:
+    "general monitor consult"
+    "diseases labs instrumental"
+    "comorbid therapy labstudies"
+    "summary summary oak";
+  gap: var(--v5-space);
+  align-items: stretch;
+}
+
+.v5-board > .panel {
+  min-width: 0;
+  height: 100%;
+  display: grid;
+  align-content: start;
+}
+
+.v5-area-general { grid-area: general; }
+.v5-area-monitor { grid-area: monitor; }
+.v5-area-consult { grid-area: consult; }
+.v5-area-diseases { grid-area: diseases; }
+.v5-area-labs { grid-area: labs; }
+.v5-area-instrumental { grid-area: instrumental; }
+.v5-area-comorbid { grid-area: comorbid; }
+.v5-area-therapy { grid-area: therapy; }
+.v5-area-labstudies { grid-area: labstudies; }
+.v5-area-summary { grid-area: summary; }
+.v5-area-oak { grid-area: oak; }
+
+.v5-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.v5-profile-grid div {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 4px;
+  background: #fcfeff;
+}
+
+.v5-profile-grid span,
+.v5-date-line,
+.v5-muted {
+  color: var(--muted);
+  font-size: 0.83rem;
+}
+
+.v5-profile-grid strong {
+  font-size: 1.02rem;
+}
+
+.v5-plain-list {
+  margin: 0;
+  padding-left: 16px;
+  display: grid;
+  gap: 7px;
+}
+
+.v5-plain-list li {
+  line-height: 1.35;
+}
+
+.v5-health-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--v5-space-sm);
+}
+
+.v5-health-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: var(--v5-card-pad);
+  display: grid;
+  gap: 8px;
+  background: #fbfeff;
+}
+
+.v5-health-head {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.v5-health-head span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.v5-health-value {
+  font-size: 1.02rem;
+  line-height: 1.35;
+}
+
+.v5-health-value strong {
+  font-size: 1.3rem;
+}
+
+.v5-target {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.v5-lab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--v5-space-sm);
+}
+
+.v5-lab-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: var(--v5-card-pad);
+  background: #fcfeff;
+  display: grid;
+  gap: 7px;
+}
+
+.v5-lab-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: start;
+}
+
+.v5-lab-head h3 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.v5-lab-value {
+  font-size: 1.02rem;
+  font-weight: 800;
+}
+
+.v5-lab-value span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.v5-badge {
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.v5-badge.ok {
+  color: #0f6f5b;
+  background: #e5f6f1;
+}
+
+.v5-badge.warning {
+  color: #915c06;
+  background: #fff1d7;
+}
+
+.v5-badge.critical {
+  color: #9f3636;
+  background: #ffdedd;
+}
+
+.v5-therapy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--v5-space-sm);
+}
+
+.v5-therapy-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: var(--v5-card-pad);
+  background: #fcfeff;
+  display: grid;
+  gap: 8px;
+}
+
+.v5-therapy-head h3 span {
+  color: #2f8997;
+  font-weight: 700;
+}
+
+.v5-therapy-head p {
+  margin-top: 3px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.v5-therapy-card h4 {
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+}
+
+.v5-event-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.v5-event-list li {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  background: #fcfeff;
+  display: grid;
+  gap: 4px;
+}
+
+.v5-event-list strong {
+  font-size: 0.95rem;
+}
+
+.v5-area-oak .table-wrap {
+  overflow-x: hidden;
+}
+
+.v5-area-oak table {
+  min-width: 100%;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.v5-area-oak th,
+.v5-area-oak td {
+  overflow-wrap: anywhere;
+}
+
+.v5-note {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.v5-summary-panel {
+  margin-top: 0;
+}
+
+.v5-summary-head {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.v5-summary-head p {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.v5-summary-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--v5-space-sm);
+}
+
+.v5-summary-grid article {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: var(--v5-card-pad);
+  background: #fcfeff;
+  display: grid;
+  gap: 8px;
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -1116,6 +1677,21 @@ th {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 1360px) {
+  .v5-board {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "general consult"
+      "monitor monitor"
+      "diseases instrumental"
+      "labs labs"
+      "comorbid labstudies"
+      "therapy therapy"
+      "summary summary"
+      "oak oak";
   }
 }
 
@@ -1130,6 +1706,26 @@ th {
 
   .v3-layout {
     grid-template-columns: 1fr;
+  }
+
+  .v4-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .v5-board {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "general"
+      "monitor"
+      "consult"
+      "diseases"
+      "labs"
+      "instrumental"
+      "comorbid"
+      "therapy"
+      "labstudies"
+      "summary"
+      "oak";
   }
 
   .controls {
@@ -1152,7 +1748,32 @@ th {
     grid-template-columns: 1fr;
   }
 
+  .v4-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .v5-hero-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .v5-board,
+  .v5-health-grid,
+  .v5-therapy-grid,
+  .v5-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
   .v3-page .panel {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .v4-page .panel {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .v5-page .panel {
     padding: 14px;
     border-radius: 14px;
   }
@@ -1180,5 +1801,559 @@ th {
 
   .summary-cta {
     bottom: 8px;
+  }
+}
+
+.v5x-page {
+  max-width: 1620px;
+}
+
+.v5x-glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(26px);
+  pointer-events: none;
+  opacity: 0.32;
+}
+
+.v5x-glow-a {
+  width: 340px;
+  height: 340px;
+  top: 140px;
+  right: -30px;
+  background: #d2ece2;
+}
+
+.v5x-glow-b {
+  width: 260px;
+  height: 260px;
+  bottom: 90px;
+  left: 0;
+  background: #d9e8fb;
+}
+
+.v5x-hero {
+  margin-top: 8px;
+  background: linear-gradient(115deg, #ffffff 0%, #fcfffd 40%, #eef7f6 74%, #f1f7ff 100%);
+}
+
+.v5x-hero-main {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.v5x-risk-card {
+  min-width: 230px;
+  border: 1px solid #f2d3cf;
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff7f5;
+  display: grid;
+  gap: 6px;
+}
+
+.v5x-risk-card p,
+.v5x-risk-card span {
+  color: #617983;
+  font-size: 0.83rem;
+}
+
+.v5x-risk-card strong {
+  font-size: 1.35rem;
+  color: #b54747;
+}
+
+.v5x-metric-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.v5x-metric {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  background: #fbfeff;
+  display: grid;
+  gap: 6px;
+}
+
+.v5x-metric p {
+  color: #607882;
+  font-size: 0.83rem;
+}
+
+.v5x-metric strong {
+  font-size: 1.42rem;
+}
+
+.v5x-metric.danger {
+  background: #ffeceb;
+  border-color: #f1c8c4;
+}
+
+.v5x-metric.warning {
+  background: #fff5df;
+  border-color: #ecd8b0;
+}
+
+.v5x-metric.neutral {
+  background: #edf5ff;
+  border-color: #ccdbef;
+}
+
+.v5x-flow {
+  margin-top: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.v5x-flow > .panel,
+.v5x-flow > .v5x-bottom-grid > .panel {
+  min-width: 0;
+}
+
+.v5x-clinical-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(0, 1.35fr) minmax(220px, 0.85fr);
+  gap: 12px;
+}
+
+.v5x-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  background: #fcfeff;
+}
+
+.v5x-card h2 {
+  margin: 0 0 12px;
+}
+
+.v5x-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.v5x-profile-grid div {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 10px;
+  display: grid;
+  gap: 3px;
+}
+
+.v5x-profile-grid span,
+.v5x-date {
+  color: #607882;
+  font-size: 0.82rem;
+}
+
+.v5x-profile-grid strong {
+  font-size: 1rem;
+}
+
+.v5x-vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.v5x-vital {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 7px;
+}
+
+.v5x-vital header {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.v5x-vital header span,
+.v5x-vital small {
+  color: #607882;
+  font-size: 0.81rem;
+}
+
+.v5x-vital p {
+  line-height: 1.3;
+}
+
+.v5x-vital b {
+  font-size: 1.14rem;
+}
+
+.v5x-spark {
+  width: 100%;
+  height: 56px;
+}
+
+.v5x-trend-wrap {
+  display: grid;
+  gap: 12px;
+}
+
+.v5x-trend-chart {
+  width: 100%;
+  height: 190px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #f9fcfe 0%, #ffffff 75%);
+}
+
+.v5x-grid-line {
+  fill: none;
+  stroke: #d9e8ec;
+  stroke-width: 1;
+}
+
+.v5x-line-bp,
+.v5x-line-glucose {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.v5x-line-bp {
+  stroke: #2a9f7a;
+}
+
+.v5x-line-glucose {
+  stroke: #2b82ca;
+}
+
+.v5x-trend-legend {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.v5x-trend-legend p {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #607882;
+  font-size: 0.84rem;
+}
+
+.v5x-trend-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.v5x-trend-legend i.bp {
+  background: #2a9f7a;
+}
+
+.v5x-trend-legend i.glucose {
+  background: #2b82ca;
+}
+
+.v5x-status-wrap {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+}
+
+.v5x-donut {
+  width: 142px;
+  height: 142px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+}
+
+.v5x-donut-center {
+  width: 96px;
+  height: 96px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.v5x-donut-center strong {
+  font-size: 1.2rem;
+}
+
+.v5x-donut-center span {
+  color: #607882;
+  font-size: 0.74rem;
+}
+
+.v5x-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  width: 100%;
+}
+
+.v5x-legend li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.86rem;
+}
+
+.v5x-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.v5x-legend i.danger {
+  background: #d45858;
+}
+
+.v5x-legend i.warning {
+  background: #d49b36;
+}
+
+.v5x-legend i.ok {
+  background: #2d9d78;
+}
+
+.v5x-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.v5x-section-head p {
+  color: #607882;
+  font-size: 0.83rem;
+}
+
+.v5x-labs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 10px;
+}
+
+.v5x-lab-layout {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.85fr) minmax(0, 2fr);
+  gap: 12px;
+}
+
+.v5x-lab-status-card {
+  height: 100%;
+}
+
+.v5x-lab-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 11px;
+  background: #fcfeff;
+  display: grid;
+  gap: 7px;
+}
+
+.v5x-lab-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 8px;
+}
+
+.v5x-lab-head h3 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.v5x-lab-value {
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.v5x-lab-value span {
+  color: #607882;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.v5x-badge {
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.v5x-badge.ok {
+  color: #0f6f5b;
+  background: #e5f6f1;
+}
+
+.v5x-badge.warning {
+  color: #915c06;
+  background: #fff1d7;
+}
+
+.v5x-badge.critical {
+  color: #9f3636;
+  background: #ffdedd;
+}
+
+.v5x-therapy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.v5x-therapy-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  background: #fcfeff;
+  display: grid;
+  gap: 7px;
+}
+
+.v5x-therapy-card header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.v5x-therapy-card header p {
+  color: #607882;
+  font-size: 0.82rem;
+}
+
+.v5x-therapy-card h3 span {
+  color: #2f8997;
+}
+
+.v5x-list {
+  margin: 0;
+  padding-left: 16px;
+  display: grid;
+  gap: 6px;
+}
+
+.v5x-events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 9px;
+}
+
+.v5x-events li {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  background: #fcfeff;
+  display: grid;
+  gap: 4px;
+}
+
+.v5x-events span {
+  color: #607882;
+}
+
+.v5x-events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.v5x-events-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 11px;
+  background: #fcfeff;
+  display: grid;
+  gap: 8px;
+}
+
+.v5x-events-card h3 {
+  margin: 0;
+}
+
+.v5x-summary-panel {
+  margin-top: 0;
+}
+
+.v5x-summary-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+.v5x-summary-head p {
+  color: #607882;
+  font-size: 0.84rem;
+}
+
+.v5x-summary-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.v5x-summary-grid article {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 11px;
+  background: #fcfeff;
+  display: grid;
+  gap: 8px;
+}
+
+@media (max-width: 1320px) {
+  .v5x-clinical-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .v5x-lab-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .v5x-events-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .v5x-hero-main {
+    flex-direction: column;
+  }
+
+  .v5x-risk-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .v5x-clinical-grid,
+  .v5x-lab-layout,
+  .v5x-vitals-grid,
+  .v5x-therapy-grid,
+  .v5x-metric-grid,
+  .v5x-events-grid {
+    grid-template-columns: 1fr;
   }
 }
