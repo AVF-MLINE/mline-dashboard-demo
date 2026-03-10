@@ -2019,6 +2019,45 @@ th {
   background: linear-gradient(180deg, #f9fcfe 0%, #ffffff 75%);
 }
 
+.v5x-trend-hit-area {
+  fill: transparent;
+  cursor: crosshair;
+}
+
+.v5x-trend-point {
+  transition: r 0.12s ease, filter 0.12s ease;
+}
+
+.v5x-trend-point.active {
+  stroke: #ffffff;
+  stroke-width: 2.2;
+  filter: drop-shadow(0 1px 2px rgba(16, 38, 51, 0.16));
+}
+
+.v5x-trend-hover-line {
+  stroke: #90a8b2;
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.v5x-trend-tooltip-box {
+  fill: rgba(255, 255, 255, 0.97);
+  stroke: #c4d7de;
+  stroke-width: 1;
+}
+
+.v5x-trend-tooltip-date {
+  fill: #2a434d;
+  font-size: 10.6px;
+  font-weight: 700;
+}
+
+.v5x-trend-tooltip-row {
+  fill: #3f5963;
+  font-size: 10.1px;
+  font-weight: 600;
+}
+
 .v5x-grid-line {
   stroke: #d9e8ec;
   stroke-width: 1;

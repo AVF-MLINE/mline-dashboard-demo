@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import BrandLogo from "../components/BrandLogo";
 
 const V5_BASE_DATA = {
@@ -696,7 +696,21 @@ function StatusDonut({ critical, warning, ok, activeTone, hoveredTone, onHoverTo
   );
 }
 
-function MultiTrendChart({ bpValues, glucoseValues, dates }) {
+function trendStatus(value, range) {
+  if (typeof range.min === "number" && value < range.min) return "ниже цели";
+  if (typeof range.max === "number" && value > range.max) return "выше цели";
+  return "в цели";
+}
+
+function MultiTrendChart({
+  bpValues,
+  glucoseValues,
+  dates,
+  bpTarget = { min: 110, max: 135 },
+  glucoseTarget = { min: 4.4, max: 6.1 }
+}) {
+  const svgRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(null);
   const width = 820;
   const height = 278;
   const margin = { top: 26, right: 52, bottom: 52, left: 52 };
@@ -720,9 +734,55 @@ function MultiTrendChart({ bpValues, glucoseValues, dates }) {
   const bpLine = bpPoints.map((item) => `${item.x},${item.y}`).join(" ");
   const glucoseLine = glucosePoints.map((item) => `${item.x},${item.y}`).join(" ");
   const xLabelStep = dates.length > 10 ? 3 : 2;
+  const hasActivePoint = activeIndex !== null;
+  const safeIndex = hasActivePoint ? activeIndex : Math.max(bpValues.length - 1, 0);
+  const activeBpPoint = bpPoints[safeIndex];
+  const activeGlucosePoint = glucosePoints[safeIndex];
+  const activeDate = dates[safeIndex];
+  const bpStateLabel = trendStatus(activeBpPoint?.value ?? bpValues.at(-1), bpTarget);
+  const glucoseStateLabel = trendStatus(activeGlucosePoint?.value ?? glucoseValues.at(-1), glucoseTarget);
+  const tooltipWidth = 248;
+  const tooltipHeight = 74;
+  const tooltipX = Math.min(
+    Math.max((activeBpPoint?.x ?? margin.left) - tooltipWidth / 2, margin.left + 4),
+    width - margin.right - tooltipWidth - 4
+  );
+  const tooltipY = margin.top + 8;
+
+  const updateActiveByClientX = (clientX) => {
+    const svgNode = svgRef.current;
+    if (!svgNode) return;
+    const rect = svgNode.getBoundingClientRect();
+    if (!rect.width) return;
+    const scaledX = ((clientX - rect.left) / rect.width) * width;
+    const nextIndex = Math.max(
+      0,
+      Math.min(
+        bpValues.length - 1,
+        Math.round(((scaledX - margin.left) / (plotWidth || 1)) * safeLength)
+      )
+    );
+    setActiveIndex((prev) => (prev === nextIndex ? prev : nextIndex));
+  };
+
+  const handleMouseMove = (event) => {
+    updateActiveByClientX(event.clientX);
+  };
+
+  const handleTouch = (event) => {
+    const touch = event.touches?.[0];
+    if (!touch) return;
+    updateActiveByClientX(touch.clientX);
+  };
 
   return (
-    <svg className="v5x-trend-chart" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="График динамики САД и глюкозы">
+    <svg
+      ref={svgRef}
+      className="v5x-trend-chart"
+      viewBox={`0 0 ${width} ${height}`}
+      role="img"
+      aria-label="График динамики САД и глюкозы"
+    >
       {bpTicks.map((tick) => {
         const y = getYBp(tick);
         return (
@@ -765,11 +825,65 @@ function MultiTrendChart({ bpValues, glucoseValues, dates }) {
       <polyline className="v5x-line-glucose" points={glucoseLine} />
 
       {bpPoints.map((point, index) => (
-        <circle key={`bp-point-${index}`} cx={point.x} cy={point.y} r="3.3" fill="#2a9f7a" />
+        <circle
+          key={`bp-point-${index}`}
+          className={`v5x-trend-point${hasActivePoint && index === safeIndex ? " active bp" : ""}`}
+          cx={point.x}
+          cy={point.y}
+          r={hasActivePoint && index === safeIndex ? "5.1" : "3.3"}
+          fill="#2a9f7a"
+        />
       ))}
       {glucosePoints.map((point, index) => (
-        <circle key={`glucose-point-${index}`} cx={point.x} cy={point.y} r="3.3" fill="#2b82ca" />
+        <circle
+          key={`glucose-point-${index}`}
+          className={`v5x-trend-point${hasActivePoint && index === safeIndex ? " active glucose" : ""}`}
+          cx={point.x}
+          cy={point.y}
+          r={hasActivePoint && index === safeIndex ? "5.1" : "3.3"}
+          fill="#2b82ca"
+        />
       ))}
+
+      {hasActivePoint && (
+        <>
+          <line
+            className="v5x-trend-hover-line"
+            x1={activeBpPoint.x}
+            y1={margin.top}
+            x2={activeBpPoint.x}
+            y2={margin.top + plotHeight}
+          />
+          <g className="v5x-trend-tooltip" transform={`translate(${tooltipX}, ${tooltipY})`}>
+            <rect className="v5x-trend-tooltip-box" width={tooltipWidth} height={tooltipHeight} rx="9" />
+            <text className="v5x-trend-tooltip-date" x="10" y="16">
+              {`Дата: ${formatDisplayDate(activeDate)}`}
+            </text>
+            <circle cx="11" cy="34" r="3.1" fill="#2a9f7a" />
+            <text className="v5x-trend-tooltip-row" x="19" y="37">
+              {`САД: ${formatTick(activeBpPoint.value, 0)} мм рт.ст. · ${bpStateLabel}`}
+            </text>
+            <circle cx="11" cy="53" r="3.1" fill="#2b82ca" />
+            <text className="v5x-trend-tooltip-row" x="19" y="56">
+              {`Глюкоза: ${formatTick(activeGlucosePoint.value, 1)} ммоль/л · ${glucoseStateLabel}`}
+            </text>
+          </g>
+        </>
+      )}
+
+      <rect
+        className="v5x-trend-hit-area"
+        x={margin.left}
+        y={margin.top}
+        width={plotWidth}
+        height={plotHeight}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseMove}
+        onMouseLeave={() => setActiveIndex(null)}
+        onClick={handleMouseMove}
+        onTouchStart={handleTouch}
+        onTouchMove={handleTouch}
+      />
 
       {dates.map((date, index) => {
         if (index % xLabelStep !== 0 && index !== dates.length - 1) return null;
