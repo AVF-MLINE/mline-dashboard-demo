@@ -38,11 +38,24 @@ jobs:
       - name: Install AWS CLI
         run: python -m pip install --upgrade pip awscli
 
+      - name: Configure AWS CLI for Yandex Object Storage
+        run: |
+          mkdir -p ~/.aws
+          cat > ~/.aws/config <<EOF
+          [default]
+          region = ${AWS_DEFAULT_REGION}
+          s3 =
+            addressing_style = path
+            signature_version = s3v4
+          EOF
+
       - name: Sync static assets
         run: |
           aws s3 sync dist/ "s3://${YC_BUCKET_NAME}/" \
             --delete \
             --endpoint-url "${YC_S3_ENDPOINT}" \
+            --cli-connect-timeout 60 \
+            --cli-read-timeout 120 \
             --region "${AWS_DEFAULT_REGION}" \
             --exclude "index.html" \
             --cache-control "public,max-age=31536000,immutable" \
@@ -52,6 +65,8 @@ jobs:
         run: |
           aws s3 cp dist/index.html "s3://${YC_BUCKET_NAME}/index.html" \
             --endpoint-url "${YC_S3_ENDPOINT}" \
+            --cli-connect-timeout 60 \
+            --cli-read-timeout 120 \
             --region "${AWS_DEFAULT_REGION}" \
             --cache-control "no-cache,no-store,must-revalidate" \
             --content-type "text/html; charset=utf-8" \
