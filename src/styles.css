@@ -3216,6 +3216,76 @@ th {
   font-size: 0.9rem;
 }
 
+.v5a-page .v5x-risk-card p,
+.v5a-page .v5x-risk-card span,
+.v5a-page .v5x-metric p,
+.v5a-page .v5x-metric span,
+.v5a-page .v5x-profile-grid span,
+.v5a-page .v5x-date,
+.v5a-page .v5x-vital header span,
+.v5a-page .v5x-vital small,
+.v5a-page .v5x-event-date,
+.v5a-page .v5x-event-note,
+.v5a-page .v5x-oak-trend-head p,
+.v5a-page .v5x-events-kpi span,
+.v5a-page .v5x-section-head p,
+.v5a-page .v5a-hero-subline {
+  color: #556c76;
+}
+
+.v5a-page .v5x-card h2,
+.v5a-page .v5x-events-card h3,
+.v5a-page .v5x-therapy-card h3,
+.v5a-page .v5x-lab-head h3 {
+  line-height: 1.24;
+}
+
+.v5a-page .v5x-card h2 {
+  margin-bottom: 12px;
+}
+
+.v5a-page .v5x-section-head {
+  margin-bottom: 14px;
+}
+
+.v5a-page .v5x-lab-card,
+.v5a-page .v5x-events-card,
+.v5a-page .v5x-therapy-card,
+.v5a-page .v5x-summary-grid article {
+  padding: 12px;
+}
+
+.v5a-page .v5a-scenario-tab:hover {
+  border-color: #9fc9bf;
+  background: #f3fbf9;
+}
+
+.v5a-page .v5a-scenario-tab:focus-visible,
+.v5a-page .v5x-legend-btn:focus-visible,
+.v5a-page .v5x-oak-row-button:focus-visible,
+.v5a-page .summary-button:focus-visible {
+  outline: 2px solid #8fbfb4;
+  outline-offset: 2px;
+}
+
+.v5a-page .v5x-legend-btn {
+  transition: border-color 0.14s ease, background-color 0.14s ease, color 0.14s ease;
+}
+
+.v5a-page .v5x-legend-btn:hover {
+  border-color: #a4cec4;
+  background: #f4fbf8;
+  color: #1a6559;
+}
+
+.v5a-page .v5x-oak-row-button {
+  border-radius: 6px;
+}
+
+.v5a-page .v5x-oak-row-button:hover {
+  color: #156f60;
+}
+
 @media (max-width: 1260px) {
   .v5a-page .v5a-admin-center h2 {
     font-size: 1.7rem;
