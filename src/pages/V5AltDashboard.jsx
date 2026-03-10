@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import BrandLogo from "../components/BrandLogo";
 
-const V5_DATA = {
+const V5_BASE_DATA = {
   snapshotDate: "05.03.2026",
   profile: {
     fullName: "Кузнецов Андрей Викторович",
@@ -64,31 +64,32 @@ const V5_DATA = {
     { name: "Триглицериды", value: "3.2", reference: "< 1.7", date: "10.11.2025", trend: "up", tone: "critical" }
   ],
   consultations: [
-    { name: "Кардиолог", code: "I10-I15", date: "10.10.2025" },
-    { name: "Эндокринолог", code: "E10-E14", date: "28.09.2025" },
-    { name: "Терапевт", code: "E10-E14", date: "08.08.2025" },
-    { name: "Терапевт", code: "I10-I15", date: "10.06.2025" },
-    { name: "Другое", code: "", date: "-" }
+    { name: "Кардиолог", code: "I10-I15", date: "10.10.2025", linkTones: ["critical", "warning"] },
+    { name: "Эндокринолог", code: "E10-E14", date: "28.09.2025", linkTones: ["critical", "warning"] },
+    { name: "Терапевт", code: "E10-E14", date: "08.08.2025", linkTones: ["warning"] },
+    { name: "Терапевт", code: "I10-I15", date: "10.06.2025", linkTones: ["warning"] },
+    { name: "Другое", code: "", date: "-", linkTones: ["ok"] }
   ],
   instrumental: [
-    { name: "ЭКГ", date: "15.05.2025", note: "доступен полный протокол" },
-    { name: "ЭХО-КГ", date: "08.08.2025", note: "динамика без отрицательных изменений" },
-    { name: "УЗИ брюшной полости", date: "08.08.2025", note: "контроль через 6 месяцев" },
-    { name: "СМАД", date: "22.09.2025", note: "среднесуточное АД выше целевого" },
-    { name: "Другое", date: "-", note: "нет новых данных" }
+    { name: "ЭКГ", date: "15.05.2025", note: "доступен полный протокол", linkTones: ["ok"] },
+    { name: "ЭХО-КГ", date: "08.08.2025", note: "динамика без отрицательных изменений", linkTones: ["ok", "warning"] },
+    { name: "УЗИ брюшной полости", date: "08.08.2025", note: "контроль через 6 месяцев", linkTones: ["warning"] },
+    { name: "СМАД", date: "22.09.2025", note: "среднесуточное АД выше целевого", linkTones: ["critical", "warning"] },
+    { name: "Другое", date: "-", note: "нет новых данных", linkTones: ["ok"] }
   ],
   laboratoryStudies: [
-    { name: "ОАК", date: "15.05.2025", status: "готов" },
-    { name: "Биохимический анализ крови", date: "08.08.2025", status: "готов" },
-    { name: "HbA1c", date: "10.11.2025", status: "готов" },
-    { name: "Липидный профиль", date: "10.11.2025", status: "готов" },
-    { name: "Другие", date: "08.08.2025", status: "ожидается" },
-    { name: "Другие", date: "-", status: "не назначено" }
+    { name: "ОАК", date: "15.05.2025", status: "готов", linkTones: ["ok"] },
+    { name: "Биохимический анализ крови", date: "08.08.2025", status: "готов", linkTones: ["ok", "warning"] },
+    { name: "HbA1c", date: "10.11.2025", status: "готов", linkTones: ["warning"] },
+    { name: "Липидный профиль", date: "10.11.2025", status: "готов", linkTones: ["warning"] },
+    { name: "Другие", date: "08.08.2025", status: "ожидается", linkTones: ["critical", "warning"] },
+    { name: "Другие", date: "-", status: "не назначено", linkTones: ["critical"] }
   ],
   comorbidTherapy: {
     title: "Медикаментозная терапия сопутствующих заболеваний",
     date: "10.10.2025",
     icd: "N18.0",
+    linkTones: ["warning"],
     diagnosis: "Хроническая болезнь почек",
     recommendations: [
       "Контроль креатинина и СКФ каждые 3 месяца",
@@ -102,6 +103,7 @@ const V5_DATA = {
       icd: "I10-I15",
       date: "10.10.2025",
       code: "I10",
+      linkTones: ["critical", "warning"],
       diagnosis: "Артериальная гипертензия",
       meds: [
         "Бисопролол 2.5 мг утром",
@@ -115,6 +117,7 @@ const V5_DATA = {
       icd: "E10-E14",
       date: "10.10.2025",
       code: "E10",
+      linkTones: ["critical", "warning"],
       diagnosis: "Инсулинозависимый сахарный диабет",
       meds: [
         "Левемир по схеме титрации",
@@ -171,6 +174,349 @@ const V5_DATA = {
   }
 };
 
+const V5_SCENARIO_2 = {
+  snapshotDate: "12.03.2026",
+  profile: {
+    fullName: "Соколова Мария Дмитриевна",
+    sex: "Женский",
+    age: 58,
+    height: 167,
+    weight: 79,
+    waist: 92,
+    bmi: 28.3
+  },
+  monitored: {
+    bloodPressure: {
+      date: "11.03.2026",
+      systolic: 146,
+      diastolic: 86,
+      pulse: 72,
+      target: "110-135 / 70-85 / 60-80"
+    },
+    glucose: {
+      date: "11.03.2026",
+      value: 7.4,
+      unit: "ммоль/л",
+      target: "4.4-6.1 ммоль/л"
+    }
+  },
+  trends: {
+    systolic: [156, 154, 153, 151, 149, 148, 146, 145, 147, 145, 144, 146, 145, 146],
+    glucose: [8.3, 8.1, 8.0, 7.9, 7.7, 7.6, 7.4, 7.5, 7.3, 7.2, 7.1, 7.3, 7.2, 7.4]
+  },
+  trendDates: V5_BASE_DATA.trendDates,
+  majorDiseases: [
+    "Сахарный диабет (E10-E14)",
+    "Артериальная гипертензия (I10-I15)",
+    "Диабетическая нефропатия (N08.3)",
+    "Ожирение (E66.9)"
+  ],
+  labs: [
+    { name: "Гликированный гемоглобин", value: "8.1", reference: "4-6", date: "11.03.2026", trend: "up", tone: "critical" },
+    { name: "Глюкоза крови", value: "7.4", reference: "4-6", date: "11.03.2026", trend: "up", tone: "warning" },
+    { name: "Креатинин", value: "96", reference: "< 97", date: "11.03.2026", trend: "flat", tone: "ok" },
+    { name: "Микроальбуминурия", value: "38", reference: "< 30", date: "11.03.2026", trend: "up", tone: "warning" },
+    { name: "Холестерин", value: "5.8", reference: "< 5.2", date: "11.03.2026", trend: "up", tone: "warning" },
+    { name: "ЛПНП", value: "3.0", reference: "< 2.6", date: "11.03.2026", trend: "up", tone: "warning" },
+    { name: "ЛПВП", value: "1.2", reference: "> 1.2", date: "11.03.2026", trend: "flat", tone: "ok" },
+    { name: "Триглицериды", value: "1.9", reference: "< 1.7", date: "11.03.2026", trend: "up", tone: "warning" }
+  ],
+  consultations: [
+    { name: "Эндокринолог", code: "E10-E14", date: "11.03.2026", linkTones: ["critical", "warning"] },
+    { name: "Кардиолог", code: "I10-I15", date: "20.02.2026", linkTones: ["warning"] },
+    { name: "Нефролог", code: "N08.3", date: "03.02.2026", linkTones: ["critical", "warning"] },
+    { name: "Школа диабета", code: "Z71.3", date: "25.01.2026", linkTones: ["warning"] },
+    { name: "Другое", code: "", date: "-", linkTones: ["ok"] }
+  ],
+  instrumental: [
+    { name: "ЭКГ", date: "05.03.2026", note: "синусовый ритм, без острой динамики", linkTones: ["ok"] },
+    { name: "СМАД", date: "28.02.2026", note: "ночное АД выше целевого", linkTones: ["critical", "warning"] },
+    { name: "УЗИ почек", date: "14.02.2026", note: "контроль микроальбуминурии через 3 месяца", linkTones: ["warning"] },
+    { name: "ЭХО-КГ", date: "20.01.2026", note: "гипертрофия ЛЖ без прогрессии", linkTones: ["warning"] },
+    { name: "Другое", date: "-", note: "нет новых данных", linkTones: ["ok"] }
+  ],
+  laboratoryStudies: [
+    { name: "HbA1c", date: "11.03.2026", status: "готов", linkTones: ["critical", "warning"] },
+    { name: "Биохимический анализ крови", date: "11.03.2026", status: "готов", linkTones: ["warning"] },
+    { name: "Липидный профиль", date: "11.03.2026", status: "готов", linkTones: ["warning"] },
+    { name: "СКФ (eGFR)", date: "11.03.2026", status: "готов", linkTones: ["warning"] },
+    { name: "Другие", date: "06.03.2026", status: "ожидается", linkTones: ["critical", "warning"] },
+    { name: "Другие", date: "-", status: "не назначено", linkTones: ["critical"] }
+  ],
+  comorbidTherapy: {
+    title: "Медикаментозная терапия сопутствующих заболеваний",
+    date: "11.03.2026",
+    icd: "E66.9",
+    linkTones: ["warning"],
+    diagnosis: "Ожирение",
+    recommendations: [
+      "Снижение массы тела на 5-7% в течение 6 месяцев",
+      "Ограничение соли до 5 г/сут",
+      "Ходьба не менее 150 минут в неделю"
+    ]
+  },
+  diseaseTherapy: [
+    {
+      name: "Артериальная гипертензия",
+      icd: "I10-I15",
+      date: "11.03.2026",
+      code: "I10",
+      linkTones: ["critical", "warning"],
+      diagnosis: "Артериальная гипертензия",
+      meds: [
+        "Телмисартан 40 мг утром",
+        "Индапамид ретард 1.5 мг утром",
+        "Амлодипин 5 мг вечером",
+        "Самоконтроль АД 2 раза/сут с дневником"
+      ]
+    },
+    {
+      name: "Сахарный диабет",
+      icd: "E10-E14",
+      date: "11.03.2026",
+      code: "E11",
+      linkTones: ["critical", "warning"],
+      diagnosis: "Сахарный диабет 2 типа",
+      meds: [
+        "Метформин 1000 мг 2 раза в день",
+        "Дапаглифлозин 10 мг утром",
+        "Контроль глюкозы не менее 4 измерений/сут"
+      ]
+    }
+  ],
+  oakPreview: {
+    indicators: [
+      {
+        metric: "Гемоглобин",
+        unit: "г/л",
+        reference: "120-160",
+        color: "#2b82ca",
+        history: [
+          { date: "10.10.2024", value: 124 },
+          { date: "12.12.2024", value: 122 },
+          { date: "15.02.2025", value: 123 },
+          { date: "10.04.2025", value: 121 },
+          { date: "20.06.2025", value: 120 },
+          { date: "11.03.2026", value: 121 }
+        ]
+      },
+      {
+        metric: "Лейкоциты",
+        unit: "10^9/л",
+        reference: "4-9",
+        color: "#2a9f7a",
+        history: [
+          { date: "10.10.2024", value: 8.1 },
+          { date: "12.12.2024", value: 7.8 },
+          { date: "15.02.2025", value: 7.5 },
+          { date: "10.04.2025", value: 7.2 },
+          { date: "20.06.2025", value: 7.0 },
+          { date: "11.03.2026", value: 6.8 }
+        ]
+      },
+      {
+        metric: "Тромбоциты",
+        unit: "10^9/л",
+        reference: "150-400",
+        color: "#b9801d",
+        history: [
+          { date: "10.10.2024", value: 255 },
+          { date: "12.12.2024", value: 251 },
+          { date: "15.02.2025", value: 246 },
+          { date: "10.04.2025", value: 241 },
+          { date: "20.06.2025", value: 236 },
+          { date: "11.03.2026", value: 232 }
+        ]
+      }
+    ]
+  }
+};
+
+const V5_SCENARIO_3 = {
+  snapshotDate: "20.03.2026",
+  profile: {
+    fullName: "Петухов Сергей Олегович",
+    sex: "Мужской",
+    age: 49,
+    height: 179,
+    weight: 84,
+    waist: 94,
+    bmi: 26.2
+  },
+  monitored: {
+    bloodPressure: {
+      date: "19.03.2026",
+      systolic: 126,
+      diastolic: 78,
+      pulse: 67,
+      target: "110-135 / 70-85 / 60-80"
+    },
+    glucose: {
+      date: "19.03.2026",
+      value: 5.6,
+      unit: "ммоль/л",
+      target: "4.4-6.1 ммоль/л"
+    }
+  },
+  trends: {
+    systolic: [134, 132, 130, 129, 128, 127, 128, 126, 125, 127, 126, 124, 126, 126],
+    glucose: [6.4, 6.2, 6.0, 5.9, 5.8, 5.7, 5.8, 5.6, 5.5, 5.7, 5.6, 5.5, 5.6, 5.6]
+  },
+  trendDates: V5_BASE_DATA.trendDates,
+  majorDiseases: [
+    "Артериальная гипертензия (I10-I15)",
+    "Сахарный диабет (E10-E14)",
+    "Дислипидемия (E78.5)",
+    "Избыточная масса тела (E66.3)"
+  ],
+  labs: [
+    { name: "Гликированный гемоглобин", value: "6.4", reference: "4-6", date: "19.03.2026", trend: "flat", tone: "warning" },
+    { name: "Глюкоза крови", value: "5.6", reference: "4-6", date: "19.03.2026", trend: "flat", tone: "ok" },
+    { name: "Креатинин", value: "84", reference: "< 97", date: "19.03.2026", trend: "flat", tone: "ok" },
+    { name: "Микроальбуминурия", value: "24", reference: "< 30", date: "19.03.2026", trend: "down", tone: "ok" },
+    { name: "Холестерин", value: "4.8", reference: "< 5.2", date: "19.03.2026", trend: "down", tone: "ok" },
+    { name: "ЛПНП", value: "2.3", reference: "< 2.6", date: "19.03.2026", trend: "down", tone: "ok" },
+    { name: "ЛПВП", value: "1.4", reference: "> 1.2", date: "19.03.2026", trend: "up", tone: "ok" },
+    { name: "Триглицериды", value: "1.8", reference: "< 1.7", date: "19.03.2026", trend: "up", tone: "warning" }
+  ],
+  consultations: [
+    { name: "Терапевт", code: "I10-I15", date: "19.03.2026", linkTones: ["warning"] },
+    { name: "Эндокринолог", code: "E10-E14", date: "10.02.2026", linkTones: ["warning"] },
+    { name: "Кардиолог", code: "I10-I15", date: "15.12.2025", linkTones: ["ok"] },
+    { name: "Школа пациента", code: "Z71.9", date: "01.12.2025", linkTones: ["ok"] },
+    { name: "Другое", code: "", date: "-", linkTones: ["ok"] }
+  ],
+  instrumental: [
+    { name: "ЭКГ", date: "15.03.2026", note: "без патологической динамики", linkTones: ["ok"] },
+    { name: "ЭХО-КГ", date: "21.01.2026", note: "структурных изменений не выявлено", linkTones: ["ok"] },
+    { name: "УЗИ брюшной полости", date: "25.12.2025", note: "без существенных отклонений", linkTones: ["ok"] },
+    { name: "СМАД", date: "14.11.2025", note: "суточный профиль АД в целевом диапазоне", linkTones: ["ok"] },
+    { name: "Другое", date: "-", note: "нет новых данных", linkTones: ["ok"] }
+  ],
+  laboratoryStudies: [
+    { name: "ОАК", date: "19.03.2026", status: "готов", linkTones: ["ok"] },
+    { name: "Биохимический анализ крови", date: "19.03.2026", status: "готов", linkTones: ["ok"] },
+    { name: "HbA1c", date: "19.03.2026", status: "готов", linkTones: ["warning"] },
+    { name: "Липидный профиль", date: "19.03.2026", status: "готов", linkTones: ["warning"] },
+    { name: "Другие", date: "15.03.2026", status: "ожидается", linkTones: ["warning"] },
+    { name: "Другие", date: "-", status: "не назначено", linkTones: ["ok"] }
+  ],
+  comorbidTherapy: {
+    title: "Медикаментозная терапия сопутствующих заболеваний",
+    date: "19.03.2026",
+    icd: "E66.3",
+    linkTones: ["ok"],
+    diagnosis: "Избыточная масса тела",
+    recommendations: [
+      "Сохранять дефицит калорий 300-400 ккал/сут",
+      "Аэробная нагрузка не менее 5 дней в неделю",
+      "Контроль массы тела и окружности талии еженедельно"
+    ]
+  },
+  diseaseTherapy: [
+    {
+      name: "Артериальная гипертензия",
+      icd: "I10-I15",
+      date: "19.03.2026",
+      code: "I10",
+      linkTones: ["warning"],
+      diagnosis: "Артериальная гипертензия",
+      meds: [
+        "Телмисартан 40 мг утром",
+        "Индапамид ретард 1.5 мг утром",
+        "Самоконтроль АД 1-2 раза/сут"
+      ]
+    },
+    {
+      name: "Сахарный диабет",
+      icd: "E10-E14",
+      date: "19.03.2026",
+      code: "E11",
+      linkTones: ["warning"],
+      diagnosis: "Сахарный диабет 2 типа",
+      meds: [
+        "Метформин 1000 мг 2 раза в день",
+        "Эмпаглифлозин 10 мг утром",
+        "Контроль глюкозы натощак и после ужина"
+      ]
+    }
+  ],
+  oakPreview: {
+    indicators: [
+      {
+        metric: "Гемоглобин",
+        unit: "г/л",
+        reference: "120-160",
+        color: "#2b82ca",
+        history: [
+          { date: "10.10.2024", value: 136 },
+          { date: "12.12.2024", value: 137 },
+          { date: "15.02.2025", value: 135 },
+          { date: "10.04.2025", value: 136 },
+          { date: "20.06.2025", value: 134 },
+          { date: "19.03.2026", value: 135 }
+        ]
+      },
+      {
+        metric: "Лейкоциты",
+        unit: "10^9/л",
+        reference: "4-9",
+        color: "#2a9f7a",
+        history: [
+          { date: "10.10.2024", value: 6.4 },
+          { date: "12.12.2024", value: 6.2 },
+          { date: "15.02.2025", value: 6.1 },
+          { date: "10.04.2025", value: 6.0 },
+          { date: "20.06.2025", value: 5.8 },
+          { date: "19.03.2026", value: 5.9 }
+        ]
+      },
+      {
+        metric: "Тромбоциты",
+        unit: "10^9/л",
+        reference: "150-400",
+        color: "#b9801d",
+        history: [
+          { date: "10.10.2024", value: 228 },
+          { date: "12.12.2024", value: 226 },
+          { date: "15.02.2025", value: 224 },
+          { date: "10.04.2025", value: 222 },
+          { date: "20.06.2025", value: 220 },
+          { date: "19.03.2026", value: 219 }
+        ]
+      }
+    ]
+  }
+};
+
+const V5_SCENARIOS = [
+  { id: "scenario-1", label: "Вариант 1", hint: "Декомпенсация", data: V5_BASE_DATA },
+  { id: "scenario-2", label: "Вариант 2", hint: "Частичный контроль", data: V5_SCENARIO_2 },
+  { id: "scenario-3", label: "Вариант 3", hint: "Стабилизация", data: V5_SCENARIO_3 }
+];
+
+const V5_ADMIN_NAMES = [
+  "Козлова Ирина Сергеевна",
+  "Мельников Павел Александрович",
+  "Сорокина Наталья Юрьевна",
+  "Ильин Дмитрий Константинович"
+];
+
+function pickRandomName(list) {
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+const V5_ADMIN_HEADER = {
+  title: "Личный кабинет администратора",
+  fullName: pickRandomName(V5_ADMIN_NAMES)
+};
+
+const V5_ADMIN_ICON_GLYPHS = {
+  user: "\ue903",
+  settings: "\ue905",
+  close: "\ue910"
+};
+
 const LAB_TONE_META = {
   critical: { label: "Критично", color: "#e35d66", cls: "v5x-badge critical" },
   warning: { label: "Внимание", color: "#f0b429", cls: "v5x-badge warning" },
@@ -203,6 +549,32 @@ function labStudyStatusTone(status) {
   if (status === "готов") return "ok";
   if (status === "ожидается") return "warning";
   return "neutral";
+}
+
+function formatDisplayDate(date) {
+  return date === "-" ? "—" : date;
+}
+
+function formatDisplayNumber(value) {
+  return String(value).replace(".", ",");
+}
+
+function formatValueWithUnit(value, unit) {
+  return `${formatDisplayNumber(value)} ${unit}`;
+}
+
+function formatReference(reference) {
+  return String(reference).replace(/\s+/g, " ").trim();
+}
+
+function hasToneLink(item, tone) {
+  if (tone === "all") return true;
+  return item.linkTones?.includes(tone) ?? false;
+}
+
+function toneMatchClass(item, tone) {
+  if (tone === "all") return "";
+  return hasToneLink(item, tone) ? " v5a-linked" : " v5a-muted";
 }
 
 function trendArrow(trend) {
@@ -464,7 +836,7 @@ function buildV5Summary(data) {
   const glucoseOutOfTarget = data.monitored.glucose.value > 6.1;
 
   return {
-    title: "V5 Сводка по пациенту",
+    title: "V5 (альтернативная) · сводка по пациенту",
     generatedAt: new Date().toLocaleString("ru-RU"),
     highlights: [
       `Профиль: ${data.profile.sex}, ${data.profile.age} лет; ИМТ ${data.profile.bmi}.`,
@@ -484,12 +856,20 @@ function buildV5Summary(data) {
   };
 }
 
-function V5Dashboard() {
+function V5AltDashboard() {
+  const [scenarioId, setScenarioId] = useState(V5_SCENARIOS[0].id);
+  const activeScenario = useMemo(
+    () => V5_SCENARIOS.find((item) => item.id === scenarioId) ?? V5_SCENARIOS[0],
+    [scenarioId]
+  );
+  const V5_DATA = activeScenario.data;
   const [isGenerating, setIsGenerating] = useState(false);
   const [summary, setSummary] = useState(null);
-  const [selectedOakMetric, setSelectedOakMetric] = useState(V5_DATA.oakPreview.indicators[0]?.metric ?? "");
+  const [summaryMeta, setSummaryMeta] = useState({ generatedAt: null, total: 0 });
+  const [selectedOakMetric, setSelectedOakMetric] = useState(V5_SCENARIOS[0].data.oakPreview.indicators[0]?.metric ?? "");
   const [labToneFilter, setLabToneFilter] = useState("all");
   const [hoveredLabTone, setHoveredLabTone] = useState(null);
+  const [showClinicalLinks, setShowClinicalLinks] = useState(false);
 
   const consultationEvents = splitPrimaryAndOtherEvents(V5_DATA.consultations);
   const instrumentalEvents = splitPrimaryAndOtherEvents(V5_DATA.instrumental);
@@ -500,7 +880,7 @@ function V5Dashboard() {
     const warning = V5_DATA.labs.filter((item) => item.tone === "warning").length;
     const ok = V5_DATA.labs.filter((item) => item.tone === "ok").length;
     return { critical, warning, ok, total: V5_DATA.labs.length };
-  }, []);
+  }, [V5_DATA]);
 
   const eventsTotal = V5_DATA.consultations.length + V5_DATA.instrumental.length + V5_DATA.laboratoryStudies.length;
   const eventsAttentionCount = useMemo(() => {
@@ -508,21 +888,30 @@ function V5Dashboard() {
     const pendingConsultations = V5_DATA.consultations.filter((item) => !item.code || item.date === "-").length;
     const pendingInstrumental = V5_DATA.instrumental.filter((item) => item.date === "-").length;
     return waitingLabs + pendingConsultations + pendingInstrumental;
-  }, []);
+  }, [V5_DATA]);
   const otherEventsCount = consultationEvents.other.length + instrumentalEvents.other.length + laboratoryEvents.other.length;
   const selectedOakIndicator = useMemo(
     () => V5_DATA.oakPreview.indicators.find((item) => item.metric === selectedOakMetric) ?? V5_DATA.oakPreview.indicators[0],
-    [selectedOakMetric]
+    [selectedOakMetric, V5_DATA]
   );
   const filteredLabs = useMemo(() => {
     if (labToneFilter === "all") return V5_DATA.labs;
     return V5_DATA.labs.filter((item) => item.tone === labToneFilter);
-  }, [labToneFilter]);
+  }, [labToneFilter, V5_DATA]);
+  const activeClinicalTone = hoveredLabTone ?? (labToneFilter === "all" ? "all" : labToneFilter);
+  const linkedTone = showClinicalLinks ? activeClinicalTone : "all";
+  const riskLevel = stats.critical >= 2 ? "Высокий" : stats.critical === 1 || stats.warning >= 4 ? "Средний" : "Низкий";
+  const riskClass = riskLevel === "Высокий" ? "high" : riskLevel === "Средний" ? "medium" : "low";
 
   const handleGenerateSummary = () => {
     setIsGenerating(true);
     window.setTimeout(() => {
-      setSummary(buildV5Summary(V5_DATA));
+      const nextSummary = buildV5Summary(V5_DATA);
+      setSummary(nextSummary);
+      setSummaryMeta((prev) => ({
+        generatedAt: nextSummary.generatedAt,
+        total: prev.total + 1
+      }));
       setIsGenerating(false);
     }, 800);
   };
@@ -531,42 +920,136 @@ function V5Dashboard() {
     setLabToneFilter((prev) => (prev === tone ? "all" : tone));
   };
 
+  const handleSelectScenario = (nextId) => {
+    const nextScenario = V5_SCENARIOS.find((item) => item.id === nextId);
+    if (!nextScenario) return;
+    setScenarioId(nextId);
+    setSummary(null);
+    setSummaryMeta({ generatedAt: null, total: 0 });
+    setSelectedOakMetric(nextScenario.data.oakPreview.indicators[0]?.metric ?? "");
+    setLabToneFilter("all");
+    setHoveredLabTone(null);
+    setShowClinicalLinks(false);
+  };
+
   return (
-    <div className="v5x-page page">
+    <div className="v5x-page v5a-page page">
       <div className="v5x-glow v5x-glow-a" />
       <div className="v5x-glow v5x-glow-b" />
 
-      <header className="panel v5x-hero animate-in">
-        <div className="v5x-hero-main">
-          <div className="brand-wrap">
+      <section className="panel v5a-unified-header animate-in">
+        <header className="v5a-admin-header">
+          <div className="v5a-admin-logo">
             <BrandLogo />
+          </div>
+          <div className="v5a-admin-center">
+            <h2>{V5_ADMIN_HEADER.title}</h2>
+            <p>{V5_ADMIN_HEADER.fullName}</p>
+          </div>
+          <div className="v5a-admin-actions" aria-label="Быстрые действия">
+            <button type="button" className="v5a-admin-btn v5a-admin-help" aria-label="Справка">
+              <svg className="v5a-admin-glyph" viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+            </button>
+            <button type="button" className="v5a-admin-btn v5a-admin-font" aria-label="Размер шрифта">
+              <span className="v5a-admin-font-a">A</span>
+              <span className="v5a-admin-font-controls"><b>-</b><b>+</b></span>
+            </button>
+            <button type="button" className="v5a-admin-btn v5a-admin-icon v5a-admin-user" aria-label="Профиль">
+              <span className="v5a-admin-icon-font" aria-hidden="true">
+                {V5_ADMIN_ICON_GLYPHS.user}
+              </span>
+            </button>
+            <button type="button" className="v5a-admin-btn v5a-admin-icon v5a-admin-gear" aria-label="Настройки">
+              <span className="v5a-admin-icon-font" aria-hidden="true">
+                {V5_ADMIN_ICON_GLYPHS.settings}
+              </span>
+            </button>
+            <button type="button" className="v5a-admin-btn v5a-admin-icon v5a-admin-close" aria-label="Закрыть">
+              <svg className="v5a-admin-close-glyph" viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M4.5 4.5 19.5 19.5M19.5 4.5 4.5 19.5" />
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <div className="v5a-header-divider" />
+
+        <div className="v5x-hero v5a-hero-content">
+        <div className="v5x-hero-main">
+          <div className="v5a-patient-wrap">
+            <span className="v5a-patient-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img">
+                <circle cx="12" cy="7.2" r="3.1" />
+                <path d="M4.8 19.8c1.9-3.5 4.4-5.2 7.2-5.2s5.3 1.7 7.2 5.2" />
+              </svg>
+            </span>
             <div>
               <h1>{V5_DATA.profile.fullName}</h1>
+              <p className="v5a-hero-subline">Снимок ЭМК: {V5_DATA.snapshotDate} · приоритет по критическим рискам</p>
             </div>
           </div>
 
-          <article className="v5x-risk-card">
+          <article className={`v5x-risk-card v5a-risk-${riskClass}`}>
             <p>Индекс клинического риска</p>
-            <strong>Высокий</strong>
+            <strong>{riskLevel}</strong>
             <span>{stats.critical} критичных + {stats.warning} предупреждений</span>
           </article>
         </div>
 
-        <div className="v5x-metric-grid">
-          <article className="v5x-metric danger">
+        <div className="v5a-scenario-switch">
+          <p>Демо-набор данных:</p>
+          <div className="v5a-scenario-tabs">
+            {V5_SCENARIOS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={`v5a-scenario-tab${scenarioId === item.id ? " active" : ""}`}
+                onClick={() => handleSelectScenario(item.id)}
+              >
+                <span>{item.label}</span>
+                <small>{item.hint}</small>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="v5x-metric-grid v5a-metric-grid">
+          <article className="v5x-metric danger v5a-metric-primary">
             <p>Критичные лаборатории</p>
             <strong>{stats.critical}</strong>
+            <span>строго по лабораторному блоку</span>
           </article>
           <article className="v5x-metric warning">
             <p>Требуют внимания</p>
             <strong>{stats.warning}</strong>
+            <span>показателей с риском декомпенсации</span>
           </article>
           <article className="v5x-metric neutral">
-            <p>События в карточке</p>
-            <strong>{eventsTotal}</strong>
+            <p>Связанные срочные действия</p>
+            <strong>{eventsAttentionCount}</strong>
+            <span>событий требуют уточнения</span>
           </article>
         </div>
-      </header>
+        <div className="v5a-link-note">
+          <p>Всего событий в карточке: {eventsTotal}.</p>
+          <label className="v5a-link-toggle">
+            <input type="checkbox" checked={showClinicalLinks} onChange={(event) => setShowClinicalLinks(event.target.checked)} />
+            Показать клинические связи
+          </label>
+          <span>
+            {showClinicalLinks
+              ? (activeClinicalTone === "all"
+                ? "Подсветка связей включена. Выберите сегмент риска в лабораторном статусе."
+                : `Подсветка связей активна: ${toneLabel(activeClinicalTone)}.`)
+              : "Подсветка связей выключена: числа в KPI интерпретируются без расширенной связки."}
+          </span>
+        </div>
+        </div>
+      </section>
 
       <main className="v5x-flow">
         <section className="panel animate-in delay-1">
@@ -589,23 +1072,23 @@ function V5Dashboard() {
                 <div className="v5x-vital">
                   <header>
                     <strong>Артериальное давление</strong>
-                    <span>{V5_DATA.monitored.bloodPressure.date}</span>
+                    <span>{formatDisplayDate(V5_DATA.monitored.bloodPressure.date)}</span>
                   </header>
                   <p>
                     <b>{V5_DATA.monitored.bloodPressure.systolic}/{V5_DATA.monitored.bloodPressure.diastolic}</b> мм рт.ст., пульс <b>{V5_DATA.monitored.bloodPressure.pulse}</b>
                   </p>
-                  <small>ЦУ: {V5_DATA.monitored.bloodPressure.target}</small>
+                  <small>ЦУ: {formatReference(V5_DATA.monitored.bloodPressure.target)}</small>
                   <Sparkline values={V5_DATA.trends.systolic} color="#2a9f7a" label="Тренд АД" />
                 </div>
                 <div className="v5x-vital">
                   <header>
                     <strong>Глюкоза крови</strong>
-                    <span>{V5_DATA.monitored.glucose.date}</span>
+                    <span>{formatDisplayDate(V5_DATA.monitored.glucose.date)}</span>
                   </header>
                   <p>
-                    <b>{V5_DATA.monitored.glucose.value}</b> {V5_DATA.monitored.glucose.unit}
+                    <b>{formatDisplayNumber(V5_DATA.monitored.glucose.value)}</b> {V5_DATA.monitored.glucose.unit}
                   </p>
-                  <small>Целевой диапазон: {V5_DATA.monitored.glucose.target}</small>
+                  <small>Целевой диапазон: {formatReference(V5_DATA.monitored.glucose.target)}</small>
                   <Sparkline values={V5_DATA.trends.glucose} color="#2b82ca" label="Тренд глюкозы" />
                 </div>
               </div>
@@ -709,8 +1192,8 @@ function V5Dashboard() {
                       <h3>{item.name}</h3>
                       <span className={badge.cls}>{badge.label}</span>
                     </div>
-                    <p className="v5x-lab-value">{trendArrow(item.trend)} {item.value} <span>({item.reference})</span></p>
-                    <p className="v5x-date">Дата: {item.date}</p>
+                    <p className="v5x-lab-value">{trendArrow(item.trend)} {formatDisplayNumber(item.value)} <span>({formatReference(item.reference)})</span></p>
+                    <p className="v5x-date">Дата: {formatDisplayDate(item.date)}</p>
                   </article>
                 );
               })}
@@ -733,25 +1216,31 @@ function V5Dashboard() {
                 <span>{V5_DATA.consultations.length}</span>
               </div>
               <ul className="v5x-events">
-                {consultationEvents.primary.map((item, index) => (
-                  <li key={`consult-${item.name}-${index}`}>
-                    <strong>{item.name}</strong>
-                    <span className="v5x-event-date">{item.date}</span>
-                    <span className="v5x-event-note">{item.code ? `Профиль: ${item.code}` : "Профиль не указан"}</span>
-                  </li>
-                ))}
+                {consultationEvents.primary.map((item, index) => {
+                  const matchClass = toneMatchClass(item, linkedTone);
+                  return (
+                    <li className={matchClass.trim()} key={`consult-${item.name}-${index}`}>
+                      <strong>{item.name}</strong>
+                      <span className="v5x-event-date">{formatDisplayDate(item.date)}</span>
+                      <span className="v5x-event-note">{item.code ? `Профиль: ${item.code}` : "Профиль не указан"}</span>
+                    </li>
+                  );
+                })}
               </ul>
               {consultationEvents.other.length > 0 && (
                 <details className="v5x-events-more">
                   <summary>Прочее ({consultationEvents.other.length})</summary>
                   <ul className="v5x-events v5x-events-compact">
-                    {consultationEvents.other.map((item, index) => (
-                      <li key={`consult-other-${item.name}-${index}`}>
-                        <strong>{item.name}</strong>
-                        <span className="v5x-event-date">{item.date}</span>
-                        <span className="v5x-event-note">{item.code ? `Профиль: ${item.code}` : "Профиль не указан"}</span>
-                      </li>
-                    ))}
+                    {consultationEvents.other.map((item, index) => {
+                      const matchClass = toneMatchClass(item, linkedTone);
+                      return (
+                        <li className={matchClass.trim()} key={`consult-other-${item.name}-${index}`}>
+                          <strong>{item.name}</strong>
+                          <span className="v5x-event-date">{formatDisplayDate(item.date)}</span>
+                          <span className="v5x-event-note">{item.code ? `Профиль: ${item.code}` : "Профиль не указан"}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </details>
               )}
@@ -763,25 +1252,31 @@ function V5Dashboard() {
                 <span>{V5_DATA.instrumental.length}</span>
               </div>
               <ul className="v5x-events">
-                {instrumentalEvents.primary.map((item, index) => (
-                  <li key={`inst-${item.name}-${index}`}>
-                    <strong>{item.name}</strong>
-                    <span className="v5x-event-date">{item.date}</span>
-                    <span className="v5x-event-note">{item.note}</span>
-                  </li>
-                ))}
+                {instrumentalEvents.primary.map((item, index) => {
+                  const matchClass = toneMatchClass(item, linkedTone);
+                  return (
+                    <li className={matchClass.trim()} key={`inst-${item.name}-${index}`}>
+                      <strong>{item.name}</strong>
+                      <span className="v5x-event-date">{formatDisplayDate(item.date)}</span>
+                      <span className="v5x-event-note">{item.note}</span>
+                    </li>
+                  );
+                })}
               </ul>
               {instrumentalEvents.other.length > 0 && (
                 <details className="v5x-events-more">
                   <summary>Прочее ({instrumentalEvents.other.length})</summary>
                   <ul className="v5x-events v5x-events-compact">
-                    {instrumentalEvents.other.map((item, index) => (
-                      <li key={`inst-other-${item.name}-${index}`}>
-                        <strong>{item.name}</strong>
-                        <span className="v5x-event-date">{item.date}</span>
-                        <span className="v5x-event-note">{item.note}</span>
-                      </li>
-                    ))}
+                    {instrumentalEvents.other.map((item, index) => {
+                      const matchClass = toneMatchClass(item, linkedTone);
+                      return (
+                        <li className={matchClass.trim()} key={`inst-other-${item.name}-${index}`}>
+                          <strong>{item.name}</strong>
+                          <span className="v5x-event-date">{formatDisplayDate(item.date)}</span>
+                          <span className="v5x-event-note">{item.note}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </details>
               )}
@@ -793,29 +1288,35 @@ function V5Dashboard() {
                 <span>{V5_DATA.laboratoryStudies.length}</span>
               </div>
               <ul className="v5x-events">
-                {laboratoryEvents.primary.map((item, index) => (
-                  <li key={`labs-${item.name}-${index}`}>
-                    <strong>{item.name}</strong>
-                    <span className="v5x-event-date">{item.date}</span>
-                    <span className={`v5x-event-status ${labStudyStatusTone(item.status)}`}>
-                      Статус: {item.status}
-                    </span>
-                  </li>
-                ))}
+                {laboratoryEvents.primary.map((item, index) => {
+                  const matchClass = toneMatchClass(item, linkedTone);
+                  return (
+                    <li className={matchClass.trim()} key={`labs-${item.name}-${index}`}>
+                      <strong>{item.name}</strong>
+                      <span className="v5x-event-date">{formatDisplayDate(item.date)}</span>
+                      <span className={`v5x-event-status ${labStudyStatusTone(item.status)}`}>
+                        Статус: {item.status}
+                      </span>
+                    </li>
+                  );
+                })}
               </ul>
               {laboratoryEvents.other.length > 0 && (
                 <details className="v5x-events-more">
                   <summary>Прочее ({laboratoryEvents.other.length})</summary>
                   <ul className="v5x-events v5x-events-compact">
-                    {laboratoryEvents.other.map((item, index) => (
-                      <li key={`labs-other-${item.name}-${index}`}>
-                        <strong>{item.name}</strong>
-                        <span className="v5x-event-date">{item.date}</span>
-                        <span className={`v5x-event-status ${labStudyStatusTone(item.status)}`}>
-                          Статус: {item.status}
-                        </span>
-                      </li>
-                    ))}
+                    {laboratoryEvents.other.map((item, index) => {
+                      const matchClass = toneMatchClass(item, linkedTone);
+                      return (
+                        <li className={matchClass.trim()} key={`labs-other-${item.name}-${index}`}>
+                          <strong>{item.name}</strong>
+                          <span className="v5x-event-date">{formatDisplayDate(item.date)}</span>
+                          <span className={`v5x-event-status ${labStudyStatusTone(item.status)}`}>
+                            Статус: {item.status}
+                          </span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </details>
               )}
@@ -827,10 +1328,10 @@ function V5Dashboard() {
           <h2>Медикаментозная терапия</h2>
           <div className="v5x-therapy-grid">
             {V5_DATA.diseaseTherapy.map((item) => (
-              <article className={`v5x-therapy-card ${item.code === "I10" ? "ag" : "sd"}`} key={item.name}>
+              <article className={`v5x-therapy-card ${item.code === "I10" ? "ag" : "sd"}${toneMatchClass(item, linkedTone)}`} key={item.name}>
                 <header>
                   <h3>{item.name} <span>({item.icd})</span></h3>
-                  <p>{item.date}</p>
+                  <p>{formatDisplayDate(item.date)}</p>
                 </header>
                 <div className="v5x-therapy-meta">
                   <p>МКБ-10: <strong>{item.code}</strong></p>
@@ -845,10 +1346,10 @@ function V5Dashboard() {
               </article>
             ))}
 
-            <article className="v5x-therapy-card comorbid">
+            <article className={`v5x-therapy-card comorbid${toneMatchClass(V5_DATA.comorbidTherapy, linkedTone)}`}>
               <header>
                 <h3>{V5_DATA.comorbidTherapy.title}</h3>
-                <p>{V5_DATA.comorbidTherapy.date}</p>
+                <p>{formatDisplayDate(V5_DATA.comorbidTherapy.date)}</p>
               </header>
               <div className="v5x-therapy-meta">
                 <p>МКБ-10: <strong>{V5_DATA.comorbidTherapy.icd}</strong></p>
@@ -892,9 +1393,9 @@ function V5Dashboard() {
                             {item.metric}
                           </button>
                         </td>
-                        <td>{lastPoint ? `${formatTrendValue(lastPoint.value)} ${item.unit}` : "-"}</td>
-                        <td>{item.reference}</td>
-                        <td>{lastPoint?.date ?? "-"}</td>
+                        <td>{lastPoint ? formatValueWithUnit(formatTrendValue(lastPoint.value), item.unit) : "—"}</td>
+                        <td>{formatReference(item.reference)}</td>
+                        <td>{formatDisplayDate(lastPoint?.date ?? "-")}</td>
                       </tr>
                     );
                   })}
@@ -905,7 +1406,7 @@ function V5Dashboard() {
               <div className="v5x-oak-trend-panel">
                 <div className="v5x-oak-trend-head">
                   <h3>{selectedOakIndicator.metric}: тренд дата/значение</h3>
-                  <p>Референс: {selectedOakIndicator.reference} {selectedOakIndicator.unit}</p>
+                  <p>Референс: {formatReference(selectedOakIndicator.reference)} {selectedOakIndicator.unit}</p>
                 </div>
                 <OakTrendChart history={selectedOakIndicator.history} color={selectedOakIndicator.color} />
               </div>
@@ -916,7 +1417,11 @@ function V5Dashboard() {
           <section className="panel v5x-summary-panel animate-in delay-4">
             <div className="v5x-summary-head">
               <h2>ИИ-сводка по пациенту</h2>
-              <p>Коротко: ключевые риски и тактика на ближайший период</p>
+              <p className="v5a-summary-meta">
+                {summaryMeta.generatedAt
+                  ? `Последняя сводка: ${summaryMeta.generatedAt} · запусков: ${summaryMeta.total}`
+                  : "Сводка еще не формировалась"}
+              </p>
             </div>
 
             <button className="summary-button" onClick={handleGenerateSummary} disabled={isGenerating}>
@@ -959,4 +1464,4 @@ function V5Dashboard() {
   );
 }
 
-export default V5Dashboard;
+export default V5AltDashboard;

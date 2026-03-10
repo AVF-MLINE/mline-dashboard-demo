@@ -3,6 +3,7 @@ import V2Dashboard from "./pages/V2Dashboard";
 import V3Dashboard from "./pages/V3Dashboard";
 import V4Dashboard from "./pages/V4Dashboard";
 import V5Dashboard from "./pages/V5Dashboard";
+import V5AltDashboard from "./pages/V5AltDashboard";
 
 function normalizePath(pathname) {
   if (!pathname) return "/";
@@ -31,6 +32,9 @@ function VersionSwitcher({ path }) {
         </a>
         <a className={path === "/v5" ? "version-link active" : "version-link"} href="/v5">
           V5
+        </a>
+        <a className={path === "/v5-alt" ? "version-link active" : "version-link"} href="/v5-alt">
+          V5 (альт)
         </a>
       </nav>
     </header>
@@ -115,6 +119,19 @@ function ComparePage() {
             Открыть V5
           </a>
         </article>
+
+        <article className="panel compare-card animate-in delay-4">
+          <h2>V5 (альтернативная)</h2>
+          <p>Адрес: `/v5-alt`</p>
+          <ul>
+            <li>Финальный polish-проход: типографика, иерархия и визуальная чистота</li>
+            <li>Связка риск-фильтров с событиями пациента и терапией</li>
+            <li>ИИ-сводка с состоянием последнего формирования и временем обновления</li>
+          </ul>
+          <a className="compare-button" href="/v5-alt">
+            Открыть V5 (альт)
+          </a>
+        </article>
       </section>
     </main>
   );
@@ -129,7 +146,8 @@ function App() {
   if (path === "/v3") content = <V3Dashboard />;
   if (path === "/v4") content = <V4Dashboard />;
   if (path === "/v5") content = <V5Dashboard />;
-  if (path !== "/" && path !== "/v1" && path !== "/v2" && path !== "/v3" && path !== "/v4" && path !== "/v5") content = <ComparePage />;
+  if (path === "/v5-alt") content = <V5AltDashboard />;
+  if (path !== "/" && path !== "/v1" && path !== "/v2" && path !== "/v3" && path !== "/v4" && path !== "/v5" && path !== "/v5-alt") content = <ComparePage />;
 
   return (
     <>
